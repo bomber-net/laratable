@@ -158,8 +158,7 @@ abstract class AbstractTableController
 											$row[$column]=$this->{$method} ($model,$model->{$column});
 									}
 							}
-					}
-				else $row=$model->toArray ();
+					} else $row=$model->toArray ();
 				$primary=$model->getKeyName ();
 				if (!array_key_exists ($primary,$row)) $row[$primary]=$model->{$primary};
 				$actions=$this->actionsFilter ($model,$request);
