@@ -1,0 +1,26 @@
+{
+	"name":"bomber-net/laratable",
+	"description":"Table library with filters, sorting, pagination, etc. for Laravel",
+	"type":"library",
+	"license":"MIT",
+	"autoload":{
+		"psr-4":{
+			"BomberNet\\Laratable\\":"src/"
+		}
+	},
+	"authors":[
+		{
+			"name":"bomber-net",
+			"email":"an-rtk@mail.ru"
+		}
+	],
+	"minimum-stability":"dev",
+	"require":{
+		"php":">=7.4",
+		"bomber-net/reflector":"dev-master",
+		"bomber-net/laravel-helpers":">=1.1.1",
+		"bomber-net/laravel-support-extensions":"dev-master",
+		"bomber-net/model-phpdoc": "dev-master",
+		"laravel/framework": ">=8.0"
+	}
+}
