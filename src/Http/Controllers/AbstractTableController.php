@@ -135,7 +135,13 @@ abstract class AbstractTableController
 		
 		protected function tableRows (Request $request,array $rows):array
 			{
-				return array_map (fn (Model $model) => $this->tableColumns ($model,$request),$rows);
+				$rows=array_map (fn (Model $model) => $this->tableColumns ($model,$request),$rows);
+				if (in_array ('#',$request->get ('columns')))
+					{
+						$shift=($request->get ('page')-1)*$request->get ('perPage');
+						foreach ($rows as $i=>$row) $rows[$i]['row']['#']=$shift+$i+1;
+					}
+				return $rows;
 			}
 		
 		protected function tableColumns (Model $model,Request $request):array
@@ -148,6 +154,8 @@ abstract class AbstractTableController
 								$method=Str::camel ("column_$column");
 								switch (true)
 									{
+										case $column==='#':
+											break;
 										case !method_exists ($this,$method):
 											$row[$column]=$model->{$column};
 											break;
