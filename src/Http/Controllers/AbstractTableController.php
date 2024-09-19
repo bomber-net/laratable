@@ -26,6 +26,7 @@ abstract class AbstractTableController
 		
 		protected const DEFAULT_PER_PAGE=1;
 		protected const DEFAULT_PAGE=1;
+		/** @var class-string $modelClass */
 		protected string $modelClass;
 		protected string $authorizeAbility='viewAny';
 		
@@ -35,7 +36,7 @@ abstract class AbstractTableController
 				$this->validate ($request,$this->requestRules ($request));
 				$controls=$this->controlsFilter ($request);
 				/** @var Model $model */
-				$model=$this->modelClass;
+				$model=app ($this->modelClass);
 				$query=method_exists ($this,'query')?$this->query ():$model::query ();
 				$counts=[];
 				$this->tableFilterByUserRights ($query,$request);
