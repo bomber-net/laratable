@@ -46,7 +46,7 @@ abstract class AbstractTableController
 				$this->tableFreeSearch ($query,$request,$request->get ('freeSearch'));
 				$this->tableOrder ($query,$request);
 				$counts['filtered']=$query->count ();
-				$filteredKeys=$query->pluck (app ($model)->getTable ().'.'.app ($model)->getKeyName ());
+				$filteredKeys=$query->pluck ($model->getTable ().'.'.$model->getKeyName ());
 				$paginate=$this->tablePaginate ($query,$request);
 				$rows=$this->tableRows ($request,$paginate->items ());
 				$pages=['total'=>$paginate->lastPage ()];
