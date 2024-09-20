@@ -37,7 +37,7 @@ abstract class AbstractTableController
 				$controls=$this->controlsFilter ($request);
 				/** @var Model $model */
 				$model=app ($this->modelClass);
-				$query=method_exists ($this,'query')?$this->query ():$model::query ();
+				$query=method_exists ($this,'query')?$this->query ($request):$model::query ();
 				$counts=[];
 				$this->tableFilterByUserRights ($query,$request);
 				$this->tableBind ($query,$request);
