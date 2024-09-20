@@ -4,6 +4,7 @@ namespace BomberNet\Laratable\Http\Controllers;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use BomberNet\Reflector\MethodsTrait;
 use Illuminate\Support\Facades\Schema;
@@ -77,13 +78,13 @@ abstract class AbstractTableController
 		
 		protected function controlsFilter (Request $request):array
 			{
-				/** @var Authorizable $user */
-				$user=$request->user ();
+				/** @var ?Authorizable $user */
+				$user=Auth::user ();
 				return array_values (array_filter ($request->get ('controls',[]),function (string $control) use ($user)
 					{
 						$method=Str::camel ("control_$control");
 						if (method_exists ($this,$method)) return $this->{$method} ($user);
-						else return $user->can ($control,$this->modelClass);
+						else return $user?->can ($control,$this->modelClass);
 					}));
 			}
 		
@@ -211,13 +212,13 @@ abstract class AbstractTableController
 		
 		protected function actionsFilter (Model $model,Request $request):array
 			{
-				/** @var Authorizable $user */
-				$user=$request->user ();
+				/** @var ?Authorizable $user */
+				$user=Auth::user ();
 				return array_values (array_filter ($request->get ('actions',[]),function (string $action) use ($model,$user)
 					{
 						$method=Str::camel ("action_$action");
 						if (method_exists ($this,$method)) return $this->{$method} ($user,$model);
-						else return $user->can ($action,$model);
+						else return $user?->can ($action,$model);
 					}));
 			}
 	}
