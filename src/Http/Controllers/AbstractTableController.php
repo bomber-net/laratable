@@ -41,12 +41,13 @@ abstract class AbstractTableController
 				$counts=[];
 				$this->tableFilterByUserRights ($query,$request);
 				$this->tableBind ($query,$request);
-				$counts['total']=$query->count ();
+				$key=$model->getTable ().'.'.$model->getKeyName ();
+				$counts['total']=$query->pluck ($key)->count ();
 				$this->tableFilter ($query,$request);
 				$this->tableFreeSearch ($query,$request,$request->get ('freeSearch'));
 				$this->tableOrder ($query,$request);
-				$counts['filtered']=$query->count ();
-				$filteredKeys=$query->pluck ($model->getTable ().'.'.$model->getKeyName ());
+				$filteredKeys=$query->pluck ($key);
+				$counts['filtered']=$filteredKeys->count ();
 				$paginate=$this->tablePaginate ($query,$request);
 				$rows=$this->tableRows ($request,$paginate->items ());
 				$pages=['total'=>$paginate->lastPage ()];
